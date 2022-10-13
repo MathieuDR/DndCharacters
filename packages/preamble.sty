@@ -1,0 +1,192 @@
+
+% ╒════════════════╕
+% │ LaTeX PACKAGES │
+% ╘════════════════╛
+
+\usepackage[layout=true,bg=full]{dnd}
+\usepackage[english]{babel}
+\usepackage[utf8]{luainputenc}
+
+\usepackage[singlelinecheck=false]{caption}
+\usepackage{lipsum}
+\usepackage{listings}
+\usepackage{shortvrb}
+\usepackage{stfloats}
+\usepackage{import}
+\usepackage{ifdraft}
+\usepackage{wrapfig}
+\usepackage{tabularx}
+\usepackage[titletoc]{appendix}
+
+\import{packages/}{tooltip.sty}
+
+\usepackage{hyperref}
+\usepackage[toc,numberedsection]{glossaries-extra}
+
+\captionsetup[table]{labelformat=empty,font={sf,sc,bf,},skip=0pt}
+
+\MakeShortVerb{|}
+
+\lstset{%
+  basicstyle=\ttfamily,
+  language=[LaTeX]{TeX},
+  breaklines=true,
+}
+
+% ╒══════════════════════════════════════════════════════════════════════════╕ %
+% │                                Glossaries                                │ %
+% ╘══════════════════════════════════════════════════════════════════════════╛ %
+
+\newglossarystyle{custom_base_style}{
+  \setglossarystyle{altlist}
+  \renewenvironment{theglossary}{% No indentation from list
+    \begin{description}[leftmargin=*]%
+  }{\end{description}}  
+  \renewcommand*{\glsnamefont}[1]{\DndFontSubsubsection{##1}}
+}
+
+\newglossarystyle{statblocks_style}{
+  \setglossarystyle{custom_base_style}
+  \renewcommand*{\glossentry}[2]{%
+    \item[\glsentryitem{##1}%
+    \glstarget{##1}{\glossentryname{}}] % Removing the name of the entry. This Will not reprint the name
+    \glossentrydesc{##1}\glspostdescription\space ##2}%
+}
+
+% \newglossary*{monsters}{Monsters}
+\newglossary*{items}{Magic items}
+\newglossary*{statblocks}{Statblocks}
+
+\import{packages/dictionaries/}{items.tex}
+\GlsXtrLoadResources[
+  src={dictionaries/items},% entries in terms.bib
+  type=items,% put these entries in the 'main' (default) list
+  sort={letter-case}% sort according to this locale
+]
+
+\import{packages/dictionaries/}{statblocks.tex}
+\GlsXtrLoadResources[
+  src={dictionaries/statblocks},% entries in terms.bib
+  type=statblocks,% put these entries in the 'main' (default) list
+  sort={letter-case}% sort according to this locale
+]
+
+% ╒══════════════════════════════════════════════════════════════════════════╕ %
+% │                                META  INFO                                │ %
+% ╘══════════════════════════════════════════════════════════════════════════╛ %
+
+\newcommand{\bookauthor}{AUTHOR}
+\newcommand{\booktitle}{TITLE}
+\newcommand{\booksubtitle}{SUBTITLE}
+\newcommand{\bookdate}{\today}
+\newcommand{\booktags}{D&D;Adventure}
+
+\title{\booktitle \\
+\large \booksubtitle}
+\author{\bookauthor}
+\date{\bookdate}
+
+
+% ╒══════════════════════════════════════════════════════════════════════════╕ %
+% │                                PDF SETUP                                 │ %
+% ╘══════════════════════════════════════════════════════════════════════════╛ %
+
+
+\hypersetup{
+  pdflang={en-GB},
+  pdfpagelayout={TwoPageRight},
+  pdfborder={0 0 0},
+  hidelinks,
+  colorlinks=false,
+  linkcolor={black},
+  urlcolor={blue},
+  pdfkeywords={\booktags},
+  pdftitle={\booktitle},
+  pdfsubject={\booksubtitle},
+  pdfauthor={\bookauthor}
+}
+
+% ╒═════════════════╕
+% │ PAGE DIMENSIONS │
+% ╘═════════════════╛
+% General dimensions
+
+% ╒═════════════════╕
+% │ Commands        │
+% ╘═════════════════╛
+
+\ExplSyntaxOn
+\NewDocumentCommand{\captureshell}{som}
+ {
+  \sdaau_captureshell:Ne \l__sdaau_captureshell_out_tl { #3 }
+  \IfBooleanT { #1 }
+   {
+    \tl_set:Nx \l__sdaau_captureshell_out_tl
+     { \tl_to_str:N \l__sdaau_captureshell_out_tl }
+   }
+  \IfNoValueTF { #2 }
+   {
+    \tl_use:N \l__sdaau_captureshell_out_tl
+   }
+   {
+    \tl_set_eq:NN #2 \l__sdaau_captureshell_out_tl
+   }
+ }
+
+\tl_new:N \l__sdaau_captureshell_out_tl
+
+\cs_new_protected:Nn \sdaau_captureshell:Nn
+ {
+  \sys_get_shell:nnN { #2 } { } #1
+  \tl_trim_spaces:N #1 % remove leading and trailing spaces
+ }
+\cs_generate_variant:Nn \sdaau_captureshell:Nn { Ne }
+\ExplSyntaxOff
+
+% Import chapters with 01.tex in a directory
+\newcount\importindex
+\newcommand{\importnumbered}[2]{
+    \importindex=1
+    \loop
+        \expandafter\import{#1}{\twodigits{\the\importindex}.tex}
+        \advance \importindex 1
+        \ifnum \importindex<#2
+    \repeat
+}
+
+% Import the _.tex files in the directories startind with 01 to 99
+\newcount\importdirindex
+\newcommand{\importdirnumbered}[2]{
+    \importdirindex=1
+    \loop
+        {\expandafter\import{#1\twodigits{\the\importdirindex}/}{_.tex}}
+        \advance \importdirindex 1
+        \ifnum \importdirindex<#2
+    \repeat
+}
+
+% pad a digit with 0 on the left
+\newcommand\twodigits[1]{%
+   \ifnum#1<10 0#1\else #1\fi
+}
+
+% Command for lined bullets
+\newcommand{\linedbullet}{\hspace{-2.75pt}$\bullet$ \hspace{5pt}}
+
+% TODO markings
+\newcommand{\todo}[1]{\ifoptionfinal{}{
+    \noindent\underline{\textbf{\color{red}\%\color{red}TODO: #1\color{white}}}
+  }
+  {}
+}
+
+% Chapter references
+\newcommand{\chref}[2][]{\hyperref[p:#1:ch:#2]{>P#1,#2:}}
+
+% ╒══════════════════════════════════════════════════════════════════════════╕ %
+% │                            Switch definitions                            │ %
+% ╘══════════════════════════════════════════════════════════════════════════╛ %
+
+\newif\ifauthornotes
+\newif\ifdm
+\newif\ifplayer
