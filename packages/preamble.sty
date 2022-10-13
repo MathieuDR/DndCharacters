@@ -54,20 +54,20 @@
 }
 
 % \newglossary*{monsters}{Monsters}
-\newglossary*{items}{Magic items}
-\newglossary*{statblocks}{Statblocks}
+\newglossary*{plants}{Plants, Hebs and Fungi}
+\newglossary*{potions}{Potions, tonics and other concoctions}
 
-\import{packages/dictionaries/}{items.tex}
+\import{packages/dictionaries/}{plants.tex}
 \GlsXtrLoadResources[
-  src={dictionaries/items},% entries in terms.bib
-  type=items,% put these entries in the 'main' (default) list
+  src={dictionaries/plants},% entries in terms.bib
+  type=plants,% put these entries in the 'main' (default) list
   sort={letter-case}% sort according to this locale
 ]
 
-\import{packages/dictionaries/}{statblocks.tex}
+\import{packages/dictionaries/}{potions.tex}
 \GlsXtrLoadResources[
-  src={dictionaries/statblocks},% entries in terms.bib
-  type=statblocks,% put these entries in the 'main' (default) list
+  src={dictionaries/potions},% entries in terms.bib
+  type=potions,% put these entries in the 'main' (default) list
   sort={letter-case}% sort according to this locale
 ]
 
