@@ -3,7 +3,7 @@
 % │ LaTeX PACKAGES │
 % ╘════════════════╛
 
-\usepackage[layout=true,bg=full]{dnd}
+\usepackage[layout=true,bg=full,nomultitoc]{dnd}
 \usepackage[english]{babel}
 \usepackage[utf8]{luainputenc}
 
@@ -16,6 +16,8 @@
 \usepackage{ifdraft}
 \usepackage{wrapfig}
 \usepackage{tabularx}
+\usepackage{xstring}
+\usepackage{calc}
 \usepackage[titletoc]{appendix}
 
 \import{packages/}{tooltip.sty}
@@ -55,7 +57,7 @@
 
 % \newglossary*{monsters}{Monsters}
 \newglossary*{plants}{Plants, Hebs and Fungi}
-\newglossary*{potions}{Potions, tonics and other concoctions}
+\newglossary*{potions}{Potions \& Tonics}
 
 \import{packages/dictionaries/}{plants.tex}
 \GlsXtrLoadResources[
@@ -75,9 +77,9 @@
 % │                                META  INFO                                │ %
 % ╘══════════════════════════════════════════════════════════════════════════╛ %
 
-\newcommand{\bookauthor}{ySomic}
-\newcommand{\booktitle}{Order of Styx}
-\newcommand{\booksubtitle}{A peasants diary}
+\newcommand{\bookauthor}{Mathieu}
+\newcommand{\booktitle}{Characters}
+\newcommand{\booksubtitle}{A players diary}
 \newcommand{\bookdate}{\today}
 \newcommand{\booktags}{D&D;Player}
 
@@ -182,6 +184,12 @@
 
 % Chapter references
 \newcommand{\chref}[2][]{\hyperref[p:#1:ch:#2]{>P#1,#2:}}
+
+\newcommand*{\ExtractFirstChar}[1]{%
+ \StrRemoveBraces{#1}[\FirstChar]%
+ \StrChar{\FirstChar}{1}[\FirstChar]%
+ \FirstChar
+}
 
 % ╒══════════════════════════════════════════════════════════════════════════╕ %
 % │                            Switch definitions                            │ %
