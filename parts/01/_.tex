@@ -5,6 +5,8 @@
 \newcommand{\Name}{Saelihn}
 \newcommand{\LastName}{Araxisys}
 \newcommand{\FullName}{\Name{} \LastName{}}
+\StrChar{\Name{}}{1}[\firstNameLetter]
+\newcommand{\GobbledName}{\StrGobbleLeft{\Name{}}{1}{}}
 \newcommand{\Race}{Shadar-Kai}
 \newcommand{\Class}{Wizard}
 \newcommand{\Subclass}{Order of the scribe}

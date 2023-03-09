@@ -19,6 +19,7 @@
 \usepackage{xstring}
 \usepackage{calc}
 \usepackage[titletoc]{appendix}
+\usepackage{lettrine}
 
 \import{packages/}{tooltip.sty}
 
@@ -43,7 +44,7 @@
   \setglossarystyle{altlist}
   \renewenvironment{theglossary}{% No indentation from list
     \begin{description}[leftmargin=*]%
-  }{\end{description}}  
+      }{\end{description}}
   \renewcommand*{\glsnamefont}[1]{\DndFontSubsubsection{##1}}
 }
 
@@ -51,40 +52,21 @@
   \setglossarystyle{custom_base_style}
   \renewcommand*{\glossentry}[2]{%
     \item[\glsentryitem{##1}%
-    \glstarget{##1}{\glossentryname{}}] % Removing the name of the entry. This Will not reprint the name
+                \glstarget{##1}{\glossentryname{}}] % Removing the name of the entry. This Will not reprint the name
     \glossentrydesc{##1}\glspostdescription\space ##2}%
 }
-
-% \newglossary*{monsters}{Monsters}
-\newglossary*{plants}{Plants, Hebs and Fungi}
-\newglossary*{potions}{Potions \& Tonics}
-
-\import{packages/dictionaries/}{plants.tex}
-\GlsXtrLoadResources[
-  src={dictionaries/plants},% entries in terms.bib
-  type=plants,% put these entries in the 'main' (default) list
-  sort={letter-case}% sort according to this locale
-]
-
-\import{packages/dictionaries/}{potions.tex}
-\GlsXtrLoadResources[
-  src={dictionaries/potions},% entries in terms.bib
-  type=potions,% put these entries in the 'main' (default) list
-  sort={letter-case}% sort according to this locale
-]
-
 % ╒══════════════════════════════════════════════════════════════════════════╕ %
 % │                                META  INFO                                │ %
 % ╘══════════════════════════════════════════════════════════════════════════╛ %
 
 \newcommand{\bookauthor}{Mathieu}
 \newcommand{\booktitle}{Characters}
-\newcommand{\booksubtitle}{A players diary}
+\newcommand{\booksubtitle}{A players diary for Tales of two counties}
 \newcommand{\bookdate}{\today}
 \newcommand{\booktags}{D&D;Player}
 
 \title{\booktitle \\
-\large \booksubtitle}
+  \large \booksubtitle}
 \author{\bookauthor}
 \date{\bookdate}
 
@@ -119,57 +101,57 @@
 
 \ExplSyntaxOn
 \NewDocumentCommand{\captureshell}{som}
- {
+{
   \sdaau_captureshell:Ne \l__sdaau_captureshell_out_tl { #3 }
   \IfBooleanT { #1 }
-   {
+  {
     \tl_set:Nx \l__sdaau_captureshell_out_tl
-     { \tl_to_str:N \l__sdaau_captureshell_out_tl }
-   }
+    { \tl_to_str:N \l__sdaau_captureshell_out_tl }
+  }
   \IfNoValueTF { #2 }
-   {
+  {
     \tl_use:N \l__sdaau_captureshell_out_tl
-   }
-   {
+  }
+  {
     \tl_set_eq:NN #2 \l__sdaau_captureshell_out_tl
-   }
- }
+  }
+}
 
 \tl_new:N \l__sdaau_captureshell_out_tl
 
 \cs_new_protected:Nn \sdaau_captureshell:Nn
- {
+{
   \sys_get_shell:nnN { #2 } { } #1
   \tl_trim_spaces:N #1 % remove leading and trailing spaces
- }
+}
 \cs_generate_variant:Nn \sdaau_captureshell:Nn { Ne }
 \ExplSyntaxOff
 
 % Import chapters with 01.tex in a directory
 \newcount\importindex
 \newcommand{\importnumbered}[2]{
-    \importindex=1
-    \loop
-        \expandafter\import{#1}{\twodigits{\the\importindex}.tex}
-        \advance \importindex 1
-        \ifnum \importindex<#2
-    \repeat
+  \importindex=1
+  \loop
+  \expandafter\import{#1}{\twodigits{\the\importindex}.tex}
+  \advance \importindex 1
+  \ifnum \importindex<#2
+  \repeat
 }
 
 % Import the _.tex files in the directories startind with 01 to 99
 \newcount\importdirindex
 \newcommand{\importdirnumbered}[2]{
-    \importdirindex=1
-    \loop
-        {\expandafter\import{#1\twodigits{\the\importdirindex}/}{_.tex}}
-        \advance \importdirindex 1
-        \ifnum \importdirindex<#2
-    \repeat
+  \importdirindex=1
+  \loop
+  {\expandafter\import{#1\twodigits{\the\importdirindex}/}{_.tex}}
+  \advance \importdirindex 1
+  \ifnum \importdirindex<#2
+  \repeat
 }
 
 % pad a digit with 0 on the left
 \newcommand\twodigits[1]{%
-   \ifnum#1<10 0#1\else #1\fi
+  \ifnum#1<10 0#1\else #1\fi
 }
 
 % Command for lined bullets
@@ -186,9 +168,9 @@
 \newcommand{\chref}[2][]{\hyperref[p:#1:ch:#2]{>P#1,#2:}}
 
 \newcommand*{\ExtractFirstChar}[1]{%
- \StrRemoveBraces{#1}[\FirstChar]%
- \StrChar{\FirstChar}{1}[\FirstChar]%
- \FirstChar
+  \StrRemoveBraces{#1}[\FirstChar]%
+  \StrChar{\FirstChar}{1}[\FirstChar]%
+  \FirstChar
 }
 
 % ╒══════════════════════════════════════════════════════════════════════════╕ %

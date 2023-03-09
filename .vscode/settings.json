@@ -1,42 +1,34 @@
-{  
-    "cSpell.enabled": true,
-    "editor.cursorBlinking": "solid",
-    "editor.wordWrap": "on",
-    "editor.wordWrapColumn": 80,
-    "editor.wrappingIndent": "same",    
-    "latex-workshop.latex.recipes": [
-      {
-        "name": "lualatex",
-        "tools": [
-          "lualatex",
-          "glossary",
-          "lualatex"
-        ]
-      }
-    ],
-    "latex-workshop.latex.tools": [
-      {
-        "name": "lualatex",
-        "command": "lualatex",
-        "args": [
-          "-interaction=nonstopmode",
-          "-file-line-error",
-          "-shell-escape",
-          "-output-directory=%OUTDIR%",
-          "%DOC%.tex"
-        ],
-      },{
-        "name": "glossary",
-        "command": "bib2gls",
-        "args": [
-          "%DOC%.tex"
-        ]
-      }
-    ],
-    "telemetry.enableTelemetry": false,
-    "latex-workshop.latex.outDir": "%DIR%/build",
-    "latex-workshop.latex.recipe.default": "first",
-    "cSpell.words": [
-      "spellcasting"
-    ],
-  }
+{
+  "cSpell.enabled": true,
+  "editor.cursorBlinking": "solid",
+  "editor.wordWrap": "on",
+  "editor.wordWrapColumn": 80,
+  "editor.wrappingIndent": "same",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "lualatex",
+      "tools": ["lualatex", "glossary", "lualatex"]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "lualatex",
+      "command": "lualatex",
+      "args": [
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-shell-escape",
+        "-output-directory=%OUTDIR%",
+        "%DOC%.tex"
+      ]
+    },
+    {
+      "name": "glossary",
+      "command": "bib2gls",
+      "args": ["%DOC%.tex"]
+    }
+  ],
+  "telemetry.enableTelemetry": false,
+  "latex-workshop.latex.outDir": "%DIR%/build",
+  "latex-workshop.latex.recipe.default": "first"
+}
