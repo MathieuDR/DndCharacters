@@ -17,9 +17,9 @@
 \usepackage{wrapfig}
 \usepackage{tabularx}
 \usepackage{xstring}
+\usepackage{xfp}
 \usepackage{calc}
 \usepackage[titletoc]{appendix}
-\usepackage{lettrine}
 
 \import{packages/}{tooltip.sty}
 
@@ -131,10 +131,12 @@
 \newcount\importindex
 \newcommand{\importnumbered}[2]{
   \importindex=1
+  \def\max{\inteval{#2 + 1}}
   \loop
-  \expandafter\import{#1}{\twodigits{\the\importindex}.tex}
+  % \expandafter\import{#1}{\twodigits{\the\importindex}.tex}
+  {\expandafter\import{#1}{\twodigits{\the\importindex}.tex}}
   \advance \importindex 1
-  \ifnum \importindex<#2
+  \ifnum \importindex<\max
   \repeat
 }
 
@@ -142,10 +144,11 @@
 \newcount\importdirindex
 \newcommand{\importdirnumbered}[2]{
   \importdirindex=1
+  \def\max{\inteval{#2 + 1}}
   \loop
   {\expandafter\import{#1\twodigits{\the\importdirindex}/}{_.tex}}
   \advance \importdirindex 1
-  \ifnum \importdirindex<#2
+  \ifnum \importdirindex<\max
   \repeat
 }
 
